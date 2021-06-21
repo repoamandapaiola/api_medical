@@ -33,6 +33,7 @@ class MetricsDTO:
         return to_json
 
 
+
 class MetricsService(ServiceABC):
     def __init__(self):
         self.authorization = 'Bearer SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
@@ -62,4 +63,5 @@ class MetricsService(ServiceABC):
         url = self.url + self.path
         content = requests.post(url, json=metric.to_json(), headers=self.headers, timeout=self.timeout)
         json_content = self.validate_response(content)
-        return MetricsDTO(json_content)
+        metric.metric_id = json_content['id']
+        return metric

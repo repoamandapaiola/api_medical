@@ -33,8 +33,8 @@ class ClinicService(ServiceABC):
     def path(self):
         return '/clinics/'
 
-    def get(self, clinic_id: str):
-        url = self.url + self.path + clinic_id
+    def get(self, clinic_id: int) -> ClinicDTO:
+        url = self.url + self.path + str(clinic_id)
         content = requests.get(url, headers=self.headers, timeout=self.timeout)
         json_content = self.validate_response(content)
         return ClinicDTO(id_=json_content['id'], name=json_content['name'])

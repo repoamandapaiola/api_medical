@@ -2,15 +2,15 @@ from marshmallow import Schema, fields
 
 
 class Clinic(Schema):
-    clinic_id = fields.Integer(required=False, load_from="id", attribute="id")
+    clinic_id = fields.Integer(required=False, data_key="id", attribute="id")
 
 
 class Physician(Schema):
-    physician_id = fields.Integer(required=False, load_from="id", attribute="id")
+    physician_id = fields.Integer(required=False, data_key="id", attribute="id")
 
 
 class Patient(Schema):
-    patient_id = fields.Integer(required=False, load_from="id", attribute="id")
+    patient_id = fields.Integer(required=False, data_key="id", attribute="id")
 
 
 class PrescriptionsCreateSchema(Schema):
@@ -19,3 +19,20 @@ class PrescriptionsCreateSchema(Schema):
     patient = fields.Nested(Patient, required=True)
     text = fields.String(required=True)
 
+
+def create_response_schema(p_id, clinic_id, physician_id, patient_id, text):
+    return {
+          "data": {
+            "id": p_id,
+            "clinic": {
+              "id": clinic_id
+            },
+            "physician": {
+              "id": physician_id
+            },
+            "patient": {
+              "id": patient_id
+            },
+            "text": text
+          }
+        }

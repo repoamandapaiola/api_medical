@@ -34,8 +34,8 @@ class PhysiciansService(ServiceABC):
     def path(self):
         return '/physicians/'
 
-    def get(self, patient_id: str):
-        url = self.url + self.path + patient_id
+    def get(self, physician_id: int):
+        url = self.url + self.path + str(physician_id)
         content = requests.get(url, headers=self.headers, timeout=self.timeout)
         json_content = self.validate_response(content)
         return PhysiciansDTO(id_=json_content['id'], name=json_content['name'],
