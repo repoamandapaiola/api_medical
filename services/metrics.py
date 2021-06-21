@@ -33,15 +33,15 @@ class MetricsDTO:
         return to_json
 
 
-
 class MetricsService(ServiceABC):
-    def __init__(self):
+    def __init__(self, url: str):
         self.authorization = 'Bearer SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
         self.headers = {'Content-Type': 'application/json; charset=utf-8', 'Authorization': self.authorization}
+        self._url = url
 
     @property
     def url(self):
-        return 'https://5f71da6964a3720016e60ff8.mockapi.io/v1'
+        return self._url
 
     @property
     def cache_ttl(self):

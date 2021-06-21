@@ -32,7 +32,7 @@ class ServiceABC(ABC):
         pass
 
     def validate_response(self, content):
-        if content.status_code == 200:
+        if 200 <= content.status_code < 300:
             response = json.loads(content.content.decode())
             return response
         if 400 < content.status_code < 500:

@@ -10,12 +10,14 @@ from views.schemas.prescriptions import create_response_schema
 
 
 class PrescriptionsController:
-    def __init__(self, dao: PrescriptioDAOI):
+    def __init__(self, dao: PrescriptioDAOI, clinic_service: ClinicService,
+                 metric_service: MetricsService, patient_service: PatientService,
+                 physician_service: PhysiciansService):
         self.dao = dao
-        self.clinic_service = ClinicService()
-        self.metrics_service = MetricsService()
-        self.patient_service = PatientService()
-        self.physician_service = PhysiciansService()
+        self.clinic_service = clinic_service
+        self.metrics_service = metric_service
+        self.patient_service = patient_service
+        self.physician_service = physician_service
 
     def create_prescription(self, clinic_id: int, physician_id: int, patient_id: int,
                             text: str):
@@ -51,7 +53,11 @@ class PrescriptionsController:
                             patient_name=patient_dto.name,
                             patient_email=patient_dto.email,
                             patient_phone=patient_dto.phone)
-        self.metrics_service.post(metric=metric)
+        try:
+            self.metrics_service.post(metric=metric)
+        except Exception as e:
+            self.dao.remove(p_id)
+            return create_schema_error(ErrorCode.METRICS_NOT_AVAILABLE), 500
 
         return create_response_schema(p_id=p_id, clinic_id=clinic_id,
                                       physician_id=physician_id, patient_id=patient_id,

@@ -11,13 +11,15 @@ class PatientDTO:
 
 
 class PatientService(ServiceABC):
-    def __init__(self):
+    def __init__(self, url: str):
         self.authorization = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJzZXJ2aWNlIjoicGF0aWVudHMifQ.Pr6Z58GzNRtjX8Y09hEBzl7dluxsGiaxGlfzdaphzVU'
         self.headers = {'Content-Type': 'application/json; charset=utf-8', 'Authorization': self.authorization}
+        self._url = url
 
     @property
     def url(self):
-        return 'https://5f71da6964a3720016e60ff8.mockapi.io/v1'
+        return self._url
+
 
     @property
     def cache_ttl(self):
