@@ -1,13 +1,15 @@
+import os
+
 import load_config
 from pymongo import MongoClient
 
-from app.app import create_app
-from services.clinics import ClinicService
-from services.metrics import MetricsService
-from services.patient import PatientService
-from services.physicians import PhysiciansService
+from src.app.app import create_app
+from src.services.clinics import ClinicService
+from src.services.metrics import MetricsService
+from src.services.patient import PatientService
+from src.services.physicians import PhysiciansService
 
-client = MongoClient(host='localhost')
+client = MongoClient(host=os.environ['MONGO_HOSTNAME'])
 out_service_url = 'https://5f71da6964a3720016e60ff8.mockapi.io/v1'
 app = create_app(session_database=client,
                  clinic_service=ClinicService(url=out_service_url),
@@ -15,4 +17,4 @@ app = create_app(session_database=client,
                  physician_service=PhysiciansService(url=out_service_url),
                  metric_service=MetricsService(url=out_service_url))
 
-app.run('0.0.0.0', port=9090)
+app.run('0.0.0.0', port=5000)

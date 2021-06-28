@@ -1,5 +1,8 @@
-import requests
-from services.service_abc import ServiceABC
+import requests_cache
+from urllib3.exceptions import ReadTimeoutError
+
+from src.exceptions.api_exceptions import ServiceNotAvailable
+from src.services.service_abc import ServiceABC
 
 
 class MetricsDTO:
@@ -38,6 +41,7 @@ class MetricsService(ServiceABC):
         self.authorization = 'Bearer SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
         self.headers = {'Content-Type': 'application/json; charset=utf-8', 'Authorization': self.authorization}
         self._url = url
+        self.session = requests_cache.CachedSession(expire_after=self.cache_ttl)
 
     @property
     def url(self):
@@ -60,8 +64,16 @@ class MetricsService(ServiceABC):
         return '/metrics'
 
     def post(self, metric: MetricsDTO):
-        url = self.url + self.path
-        content = requests.post(url, json=metric.to_json(), headers=self.headers, timeout=self.timeout)
-        json_content = self.validate_response(content)
-        metric.metric_id = json_content['id']
-        return metric
+        tries = self.retry
+        while True:
+            try:
+                url = self.url + self.path
+                content = self.session.post(url, json=metric.to_json(), headers=self.headers, timeout=self.timeout)
+                json_content = self.validate_response(content)
+                metric.metric_id = json_content['id']
+                return metric
+            except ReadTimeoutError:
+                if tries > 0:
+                    tries = tries - 1
+                    continue
+                raise ServiceNotAvailable()

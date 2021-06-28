@@ -1,12 +1,12 @@
-from dao.prescription_interface import PrescriptioDAOI
+from src.dao.prescription_interface import PrescriptioDAOI
 
-from exceptions.api_exceptions import NotFound, ServiceNotAvailable
-from services.clinics import ClinicDTO, ClinicService
-from services.metrics import MetricsService, MetricsDTO
-from services.patient import PatientService
-from services.physicians import PhysiciansService
-from views.schemas.factory_schema_error import create_schema_error, ErrorCode
-from views.schemas.prescriptions import create_response_schema
+from src.exceptions.api_exceptions import NotFound, ServiceNotAvailable
+from src.services.clinics import ClinicDTO, ClinicService
+from src.services.metrics import MetricsService, MetricsDTO
+from src.services.patient import PatientService
+from src.services.physicians import PhysiciansService
+from src.views.schemas.factory_schema_error import create_schema_error, ErrorCode
+from src.views.schemas.prescriptions import create_response_schema
 
 
 class PrescriptionsController:
@@ -24,6 +24,7 @@ class PrescriptionsController:
         try:
             clinic_dto = self.clinic_service.get(clinic_id)
         except (NotFound, ServiceNotAvailable):
+            # requisito de caso o serviço da clinica não estar ativo, continua a request
             clinic_dto = ClinicDTO(id_=clinic_id, name='')
 
         try:
@@ -57,7 +58,7 @@ class PrescriptionsController:
             self.metrics_service.post(metric=metric)
         except Exception as e:
             self.dao.remove(p_id)
-            return create_schema_error(ErrorCode.METRICS_NOT_AVAILABLE), 500
+            return create_schema_error(ErrorCode.METRICS_NOT_AVAILABLE.value), 500
 
         return create_response_schema(p_id=p_id, clinic_id=clinic_id,
                                       physician_id=physician_id, patient_id=patient_id,

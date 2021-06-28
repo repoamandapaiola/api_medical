@@ -1,10 +1,10 @@
 from flask import Blueprint, request, current_app
 from marshmallow import ValidationError
 
-from controller.prescriptions import PrescriptionsController
-from dao.mongo_dao import PrescriptionMongoDAO
-from views.schemas.factory_schema_error import create_schema_error, ErrorCode
-from views.schemas.prescriptions import PrescriptionsCreateSchema
+from src.controller.prescriptions import PrescriptionsController
+from src.dao.mongo_dao import PrescriptionMongoDAO
+from src.views.schemas.factory_schema_error import create_schema_error, ErrorCode
+from src.views.schemas.prescriptions import PrescriptionsCreateSchema
 
 prescriptions_blueprint = Blueprint('user', __name__, url_prefix='/prescriptions')
 

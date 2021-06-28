@@ -1,7 +1,7 @@
 import json
 from abc import ABC, abstractmethod
 
-from exceptions.api_exceptions import ServiceNotAvailable, NotFound
+from src.exceptions.api_exceptions import ServiceNotAvailable, NotFound
 
 
 class ServiceABC(ABC):

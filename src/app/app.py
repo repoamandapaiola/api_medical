@@ -1,7 +1,7 @@
 from flask import Blueprint, Flask
 
-from services.service_abc import ServiceABC
-from views.prescriptions import prescriptions_blueprint
+from src.services.service_abc import ServiceABC
+from src.views.prescriptions import prescriptions_blueprint
 
 home = Blueprint('home', import_name='home')
 

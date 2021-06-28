@@ -2,19 +2,19 @@ import os
 import unittest
 import json
 
-from app.app import create_app
+import load_config
+from src.app.app import create_app
 from pymongo import MongoClient
 
-from services.clinics import ClinicService
-from services.metrics import MetricsService
-from services.patient import PatientService
-from services.physicians import PhysiciansService
+from src.services.clinics import ClinicService
+from src.services.metrics import MetricsService
+from src.services.patient import PatientService
+from src.services.physicians import PhysiciansService
 
 
 class AppTest(unittest.TestCase):
 
     def setup_mongo(self):
-        import load_config  # LOAD das variaveis de ambiente
         self.client = MongoClient(host='localhost')
         self.table = self.client.get_database(
             os.environ['MONGO_DATABASE']).get_collection(os.environ['MONGO_COLLECTION'])
@@ -228,7 +228,7 @@ class AppTest(unittest.TestCase):
         # Then
         content = json.loads(response.data.decode())
         self.assertEqual(500, response.status_code)
-        self.assertEqual(5, content['error']['code'])
+        self.assertEqual(4, content['error']['code'])
         self.assertEqual('metrics service not available', content['error']['message'])
 
         doc = self.table.find_one()

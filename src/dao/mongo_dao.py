@@ -2,7 +2,7 @@ import os
 
 from bson import ObjectId
 
-from dao.prescription_interface import PrescriptioDAOI
+from src.dao.prescription_interface import PrescriptioDAOI
 
 
 class PrescriptionMongoDAO(PrescriptioDAOI):
