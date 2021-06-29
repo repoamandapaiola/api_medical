@@ -22,18 +22,18 @@ Api para obter prescrições médicas
 >htmlcov: resultado do pytest executado nos testes unitários (essa pasta eu só comitei para vocês verem a cobertura) <br>
 
 
-###src
+### src
 
-####app
+#### app
 aqui deve ficar os arquivos referentes a inicialização da aplicação
 e outras configuraçãoes que poderiam estar aqui também da aplicação
 
-####controller
+#### controller
 como na arquitetura MVC-model,view,controler.
 Faz o meio de campo entre a view a o model.
 O controle de fluxo de dados.
 
-####dao
+#### dao
 Utilizei este padrão para desacoplar o código de banco de dados.
 Assim, é possível referenciar no modelo apenas as 
 operações necessárias com os dados, ao inves de acoplar
@@ -45,17 +45,17 @@ nova classe de DAO para outro banco e a responsabilidade
 de conectar, conversar com o banco na sua linguagem
 fica encapsulada nessa classe.
 
-####services
+#### services
 aqui eu quis deixar os acessos a aplicações externas.
 Então, cada serviço trata o acesso a uma API externa.
 Mas, se tivesse que acessar alguma outra base de dados
 externa para capturar dados, por exemplo, poderia ficar
 nessa pasta.
 
-####views
+#### views
 e aqui fica toda a parte da 'interface' da aplicação, que no 
 caso da API são as rotas que o usuário consegue acessar.
-#####schemas
+##### schemas
 dentro da views criei uma pasta schemas 
 que tem o esqueleto das requisições.
 Já usei bastante esse modelo para fazer APIs.
@@ -63,8 +63,8 @@ Eu vejo que é bom para facilitar a leitura do código
 e organização.
 Mas acaba dando um pouco mais de trabalho.
 
-###tests
-####unittests
+### tests
+#### unittests
 pasta que contem os testes unitários da aplicação.
 Aqui eu coloquei apenas um arquivo com os testes unitários das rotas.
 Eu pensei eu fazer o teste usando a unidade rotas,
