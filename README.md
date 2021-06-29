@@ -109,5 +109,9 @@ docker-compose up
 ~~~
 Ele deve subir dois containers: um do mongo e outro da aplicação.
 
+#### testar a api:
 
-
+verificar o ip do log do comando do docker-compose e fazer a chamada:
+~~~
+ Running on http://172.21.0.2:5000/ 
+~~~
