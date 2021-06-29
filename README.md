@@ -1,5 +1,5 @@
 # Api Medical
-api para obter prescrições médicas
+Api para obter prescrições médicas
 
 # Requisitos
 
@@ -74,6 +74,8 @@ Os testes só seriam afetados se mudasse o requisito da rota.
 Basicamente fiz um teste para cada requisito incluindo
 os cenários de erros nos serviços externos.
 
+#### Rodar testes
+
 Para executar os teste com o resultado de cobertura,
 basta executar:
 
@@ -81,19 +83,31 @@ basta executar:
 python -m pytest --cov-report html --cov=src tests
 ~~~
 
-###Como rodar
-Basta baixar e ter o docker-compose instalado.
+### Como rodar o projeto
+
+Crie uma um arquivo .env com as seguintes váriaveis:
+~~~
+MONGO_HOSTNAME='mongo'
+MONGO_DATABASE='teste'
+MONGO_COLLECTION='teste'
+~~~
+Onde:
+MONGO_HOSTNAME- nome do host do mongo. Se você for utilizar o docker-compose,
+este nome tem que corresponder ao nome do container do mongo.
+
+>Utilizei o python-dotenv para deixar parametrizavel
+>os dados de acesso ao banco de dados.
+>Neste caso nem precisaria, mas por costume de fazer assim eu deixei.
+>O acesso ao mongo fica pelo nome do container 'mongo'.
+>Isso aqui poderia ter uma arquivo de .config para cada ambiente que
+>estivesse rodando a aplicação, no caso de PROD, HML.. por exemplo.
+
+Ter o docker-compose instalado.<br>
 Dentro da pasta raiz, executar: <br>
 ~~~
 docker-compose up
 ~~~
 Ele deve subir dois containers: um do mongo e outro da aplicação.
 
-Utilizei o python-dotenv para deixar parametrizavel
-os dados de acesso ao banco de dados.
-Neste caso nem precisaria, mas por costume de fazer assim eu deixei.
-O acesso ao mongo fica pelo nome do container 'mongo'.
-Essas informações ficam no arquivo .env.config.
-Isso aqui poderia ter uma arquivo de .config para cada ambiente que
-estivesse rodando a aplicação, no caso de PROD, HML.. por exemplo.
+
 
