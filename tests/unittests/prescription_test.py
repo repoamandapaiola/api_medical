@@ -15,7 +15,7 @@ from src.services.physicians import PhysiciansService
 class AppTest(unittest.TestCase):
 
     def setup_mongo(self):
-        self.client = MongoClient(host='localhost')
+        self.client = MongoClient(host=os.environ['MONGO_HOSTNAME'])
         self.table = self.client.get_database(
             os.environ['MONGO_DATABASE']).get_collection(os.environ['MONGO_COLLECTION'])
         self.table.delete_many({})  # limpando dados para iniciar testes
